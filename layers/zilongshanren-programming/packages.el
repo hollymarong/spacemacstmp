@@ -2,7 +2,7 @@
 ;;
 ;; Copyright (c) 2014-2016 zilongshanren
 ;;
-;; Author: zilongshanren <guanghui8827@gmail.com>
+;; Author: marong <hollymarong@gmail.com>
 ;; URL: https://github.com/zilongshanren/spacemacs-private
 ;;
 ;; This file is not part of GNU Emacs.
@@ -47,6 +47,17 @@
         robe
         exec-path-from-shell
         ))
+
+(defun zilongshanren-programming/init-rust ()
+(use-package racer
+  :config (progn
+            (setq company-tooltip-align-annotations t ;
+                  racer-cmd (expand-file-name "~/.cargo/bin/racer") 
+                  racer-rust-src-path (expand-file-name (getenv "RUST_SRC_PATH")))
+            (add-hook 'rust-mode-hook  #'racer-mode)
+            (add-hook 'racer-mode-hook #'eldoc-mode)
+            (add-hook 'racer-mode-hook #'company-mode))))
+
 
 (defun zilongshanren-programming/init-compile-dwim ()
   (use-package compile-dwim
@@ -148,9 +159,9 @@
   (setq python-shell-interpreter "python"))
 
 (defun zilongshanren-programming/post-init-js-doc ()
-  (setq js-doc-mail-address "guanghui8827@gmail.com"
-        js-doc-author (format "Guanghui Qu <%s>" js-doc-mail-address)
-        js-doc-url "http://www.zilongshanren.com"
+  (setq js-doc-mail-address "marong.fe@bytedance.com"
+        js-doc-author (format "marong.fe <%s>" js-doc-mail-address)
+        js-doc-url "http://marong.me"
         js-doc-license "MIT")
 
   )
@@ -281,6 +292,19 @@
       "hd" 'cmake-help)
     (add-hook 'cmake-mode-hook (function cmake-rename-buffer))))
 
+;; use local eslint from node_modules before global
+;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+
+(defun my/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules/eslint"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (defun zilongshanren-programming/post-init-flycheck ()
   (with-eval-after-load 'flycheck
@@ -288,6 +312,14 @@
       (setq flycheck-display-errors-delay 0.9)
       (setq flycheck-idle-change-delay 2.0)
       )))
+
+;; (defun zilongshanren-programming/post-init-css ()
+;;   (with-eval-after-load 'css-mode
+;;     (progn
+;;       (setq-default css-indent-offset 2)
+;;       (setq flycheck-stylelintrc "~/.stylelintrc")
+;;       )))
+
 
 (defun zilongshanren-programming/post-init-eldoc ()
   (setq eldoc-idle-delay 0.4))
@@ -362,9 +394,12 @@
         (setq-default js2-auto-indent-p t)
 
         (setq-default js2-bounce-indent nil)
-        (setq-default js-indent-level 4)
-        (setq-default js2-basic-offset 4)
-        (setq-default js-switch-indent-offset 4)
+        (setq-default js-indent-level 2)
+        ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=25904#8
+        ;; https://github.com/mooz/js2-mode/issues/314
+        ;; (setq-default js-indent-align-list-continuation nil)
+        (setq-default js2-basic-offset 2)
+        (setq-default js-switch-indent-offset 2)
         ;; Let flycheck handle parse errors
         (setq-default js2-mode-show-parse-errors nil)
         (setq-default js2-mode-show-strict-warnings nil)

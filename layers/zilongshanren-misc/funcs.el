@@ -1,8 +1,8 @@
 ;;; funcs.el --- zilongshanren Layer packages File for Spacemacs
 ;;
-;; Copyright (c) 2015-2016 zilongshanren 
+;; Copyright (c) 2015-2016 zilongshanren
 ;;
-;; Author: zilongshanren <guanghui8827@gmail.com>
+;; Author: marong <hollymarong@gmail.com>
 ;; URL: https://github.com/zilongshanren/spacemacs-private
 ;;
 ;; This file is not part of GNU Emacs.
@@ -18,7 +18,7 @@
     (symbol-overlay-put)))
 
 (defun zilongshanren/clearn-highlight ()
-    (interactive)
+  (interactive)
   (clear-highlight-frame)
   (symbol-overlay-remove-all))
 
@@ -122,14 +122,14 @@
       (kill-new val)
       (message "%s => kill-ring" val))))
 
-  ;; my fix for tab indent
+;; my fix for tab indent
 (defun zilongshanren/indent-region(numSpaces)
   (progn
-                                      ; default to start and end of current line
+                                        ; default to start and end of current line
     (setq regionStart (line-beginning-position))
     (setq regionEnd (line-end-position))
 
-                                      ; if there's a selection, use that instead of the current line
+                                        ; if there's a selection, use that instead of the current line
     (when (use-region-p)
       (setq regionStart (region-beginning))
       (setq regionEnd (region-end))
@@ -271,8 +271,8 @@ e.g. Sunday, September 17, 2000."
              (add-hook 'org-pomodoro-short-break-finished-hook '(lambda () (sound-wav-play (expand-file-name "~/.spacemacs.d/game_win.wav"))))
              (add-hook 'org-pomodoro-long-break-finished-hook '(lambda () (sound-wav-play (expand-file-name "~/.spacemacs.d/game_win.wav")))))
     (progn (add-hook 'org-pomodoro-finished-hook '(lambda () (zilongshanren/growl-notification "Pomodoro Finished" "☕️ Have a break!" t)))
-             (add-hook 'org-pomodoro-short-break-finished-hook '(lambda () (zilongshanren/growl-notification "Short Break" "🐝 Ready to Go?" t)))
-             (add-hook 'org-pomodoro-long-break-finished-hook '(lambda () (zilongshanren/growl-notification "Long Break" " 💪 Ready to Go?" t))))))
+           (add-hook 'org-pomodoro-short-break-finished-hook '(lambda () (zilongshanren/growl-notification "Short Break" "🐝 Ready to Go?" t)))
+           (add-hook 'org-pomodoro-long-break-finished-hook '(lambda () (zilongshanren/growl-notification "Long Break" " 💪 Ready to Go?" t))))))
 
 ;; http://blog.lojic.com/2009/08/06/send-growl-notifications-from-carbon-emacs-on-osx/
 (defun zilongshanren/growl-notification (title message &optional sticky)

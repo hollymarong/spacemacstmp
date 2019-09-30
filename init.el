@@ -35,6 +35,7 @@ This function should only modify configuration layer settings."
      better-defaults
      ranger
      colors
+     rust
      prodigy
      search-engine
      graphviz
@@ -79,7 +80,8 @@ This function should only modify configuration layer settings."
      html
      (javascript :variables javascript-backend 'nil)
      (typescript :variables
-                typescript-fmt-on-save nil
+                typescript-indent-level 2
+                ;; typescript-fmt-on-save t
                 typescript-fmt-tool 'typescript-formatter)
      emacs-lisp
      (clojure :variables clojure-enable-fancify-symbols t)
@@ -122,6 +124,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-install-packages 'used-only
    dotspacemacs-delete-orphan-packages t))
 
+
 (defun dotspacemacs/init ()
   "Initialization:
 This function is called at the very beginning of Spacemacs startup,
@@ -135,6 +138,7 @@ It should only modify the values of Spacemacs settings."
    ;; EXPERIMENTAL.org at to root of the git repository.
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
+
 
    ;; File path pointing to emacs 27.1 executable compiled with support
    ;; for the portable dumper (this is currently the branch pdumper).
@@ -228,8 +232,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-light
-                         solarized-dark)
+   dotspacemacs-themes '(solarized-dark
+                         solarized-light)
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
    ;; first three are spaceline themes. `doom' is the doom-emacs mode-line.
