@@ -72,6 +72,7 @@ This function should only modify configuration layer settings."
      gpu
      yaml
      react
+     (go :variables go-backend 'go-mode)
      (python :variables
              python-test-runner '(nose pytest))
      ;; (ruby :variables ruby-version-manager 'chruby)
@@ -80,9 +81,11 @@ This function should only modify configuration layer settings."
      html
      (javascript :variables javascript-backend 'nil)
      (typescript :variables
-                typescript-indent-level 2
-                ;; typescript-fmt-on-save t
-                typescript-fmt-tool 'typescript-formatter)
+                 typescript-indent-level 2
+                 tide-server-max-response-length 1024000000
+                 ;; typescript-fmt-on-save t
+                 ;; typescript-fmt-tool 'typescript-formatter
+                 )
      emacs-lisp
      (clojure :variables clojure-enable-fancify-symbols t)
      racket
@@ -138,6 +141,7 @@ It should only modify the values of Spacemacs settings."
    ;; EXPERIMENTAL.org at to root of the git repository.
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
+
 
 
    ;; File path pointing to emacs 27.1 executable compiled with support
